@@ -41,6 +41,20 @@
     <?js } ?>
 </header>
 
+<?js if(env.conf.templates && env.conf.templates.default && env.conf.templates.default.includeMethodsIndex === true) { ?>
+<nav id="methods">
+    <h3>Methods</h3>
+    <?js
+        var methods = self.find({kind: 'function', memberof: isGlobalPage ? {isUndefined: true} : doc.longname});
+        if (methods && methods.length && methods.forEach) {
+    ?>
+        <?js methods.forEach(function(m) { ?>
+            <a href="#<?js= m.id ?>"><?js if (m.access === 'private') { ?><em><?js } ?><?js= m.name ?><?js if (m.access === 'private') { ?></em><?js } ?></a><br />
+        <?js }); ?>
+    <?js } ?>
+</nav>
+<?js } ?>
+
 <article>
     <div class="container-overview">
     <?js if (doc.kind === 'module' && doc.modules) { ?>
